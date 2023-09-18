@@ -27,29 +27,42 @@ resource "helm_release" "i" {
   }
 
   set {
-    name  = "persistence.config.enabled"
+    name  = "persistence.enabled"
     value = "true"
   }
 
   set {
-    name  = "persistence.config.size"
+    name  = "image.tag"
+    value = "1.29.2"
+  }
+
+  set {
+    name  = "persistence.size"
     value = "10Gi"
   }
 
   set {
-    name  = "persistence.config.retain"
+    name  = "ingress.enabled"
+    value = "true"
+  }
+
+  set_sensitive {
+    name  = "ingress.host"
+    value = "https://${var.domain_name}"
+  }
+
+  set {
+    name  = "admin.enabled"
     value = "true"
   }
 
   set {
-    name  = "ingress.main.enabled"
+    name  = "vaultwarden.allowSignups"
     value = "false"
   }
 
-  set_sensitive {
-    name  = "ingress.main.hosts[0].host"
-    value = "https://${var.domain_name}"
-  }
+
+
 
   # set {
   #   name  = "bitwardenrs.smtp.enabled"
