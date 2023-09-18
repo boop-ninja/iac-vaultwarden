@@ -43,13 +43,13 @@ resource "helm_release" "i" {
 
   set {
     name  = "ingress.enabled"
-    value = "true"
+    value = "false"
   }
 
-  set_sensitive {
-    name  = "ingress.host"
-    value = "https://${var.domain_name}"
-  }
+#  set_sensitive {
+#    name  = "ingress.host"
+#    value = "https://${var.domain_name}"
+#  }
 
   set {
     name  = "admin.enabled"
