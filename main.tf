@@ -21,11 +21,6 @@ resource "helm_release" "i" {
   dependency_update = true
   recreate_pods     = true
 
-  set_sensitive {
-    name  = "env.ADMIN_TOKEN"
-    value = var.admin_token
-  }
-
   set {
     name  = "persistence.enabled"
     value = "true"
@@ -33,7 +28,7 @@ resource "helm_release" "i" {
 
   set {
     name  = "image.tag"
-    value = "1.29.2"
+    value = "1.30.5"
   }
 
   set {
@@ -46,14 +41,9 @@ resource "helm_release" "i" {
     value = "false"
   }
 
-#  set_sensitive {
-#    name  = "ingress.host"
-#    value = "https://${var.domain_name}"
-#  }
-
   set {
-    name  = "admin.enabled"
-    value = "true"
+    name  = "vaultwarden.domain"
+    value = "https://${var.domain_name}"
   }
 
   set {
@@ -62,38 +52,14 @@ resource "helm_release" "i" {
   }
 
 
+  set {
+    name  = "vaultwarden.admin.enabled"
+    value = "true"
+  }
 
+  set_sensitive {
+    name  = "vaultwarden.admin.token"
+    value = var.admin_token
+  }
 
-  # set {
-  #   name  = "bitwardenrs.smtp.enabled"
-  #   value = "true"
-  # }
-  # set {
-  #   name  = "bitwardenrs.smtp.from"
-  #   value = "no-reply@${var.domain_name}"
-  # }
-  # set {
-  #   name  = "bitwardenrs.smtp.fromName"
-  #   value = "BitWarden"
-  # }
-  # set {
-  #   name  = "bitwardenrs.smtp.host"
-  #   value = var.smtp_host
-  # }
-  # set_sensitive {
-  #   name  = "bitwardenrs.smtp.user"
-  #   value = var.smtp_user
-  # }
-  # set_sensitive {
-  #   name  = "bitwardenrs.smtp.password"
-  #   value = var.smtp_password
-  # }
-  # set_sensitive {
-  #   name  = "env.SMTP_USERNAME"
-  #   value = var.smtp_user
-  # }
-  # set_sensitive {
-  #   name  = "env.SMTP_PASSWORD"
-  #   value = var.smtp_password
-  # }
 }
